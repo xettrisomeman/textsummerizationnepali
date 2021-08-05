@@ -7,6 +7,8 @@ from fastapi.templating import Jinja2Templates
 from app import get_summarized_text, get_text
 
 
+import uvicorn
+
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
@@ -30,4 +32,7 @@ def predict(request: Request, input_text: str = Form(...)):
     return templates.TemplateResponse("index.html", context={"request": request, "summary": summarized_sentence, "original_text": original_text})
 
 
+
+if __name__ == '__main__':
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
