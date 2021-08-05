@@ -3,15 +3,23 @@ from pathlib import Path
 from fastapi.responses import HTMLResponse
 from fastapi import FastAPI, Form, Request
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware import cors
 
-from app import get_summarized_text, get_text
+from model import get_summarized_text, get_text
 
+
+origins = [
+    'http://127.0.0.1:8000',
+    'http://0.0.0.0:8000'
+]
 
 import uvicorn
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
+
+app.add_middleware(cors.CORSMiddleware, allow_origin=orgins, allow_credentials=True, allow_methods = ["*"])
 
 
 @app.get("/")
