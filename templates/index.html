@@ -7,13 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="post">
+    <form method="post", action="/models">
         <input type="text" name="input_text">
         <input type="submit">
     </form>
     
-    <p>Summarized Text : {{text}}</p>
+    <p>Summarized Text : {{summary}}</p>
 
+    <p>Original Text: {{original_text}}</p>
 </body>
 </html>
 

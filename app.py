@@ -17,15 +17,14 @@ def get_summarized_text(text):
 
     important_sentences = np.argsort(sentence_sum, axis=0)[::-1]
 
-    return get_text(num_sentences, sentences, important_sentences)
+    return get_text(text, num_sentences, sentences, important_sentences)
 
 
 
 
-def get_text(num_sentences, sentences, important_sentences):
+def get_text(text, num_sentences, sentences, important_sentences):
     full_sentence = ' '
     for i in range(0, len(sentences)):
         if i in important_sentences[:num_sentences]:
-            full_sentence += sentence[i] + '।'
-    return full_sentence
-
+            full_sentence += sentences[i] + '।'
+    return full_sentence, text

@@ -8,9 +8,8 @@ from app import get_summarized_text, get_text
 
 
 app = FastAPI()
+templates = Jinja2Templates(directory="templates")
 
-BASE_PATH = Path(__file__).resolve().parent
-TEMPLATES = Jinja2Templates(directory=str(BASE_PATH / "templates"))
 
 
 @app.get("/")
@@ -18,9 +17,17 @@ def read_root():
     return {"message": "Go to /models"}
 
 
+
 @app.get("/models", response_class=HTMLResponse)
-def read_item(request: Request, input_text: str = Form(...)):
-    text_file = get_summarized_text(input_text)
-    return templates.TemplateResponse("index.html", context={"request": request, "text": text_file})
+def predict(request: Request):
+    return templates.TemplateResponse("index.html", context={"request": request})
+
+
+
+@app.post('/models', response_class=HTMLResponse)
+def predict(request: Request, input_text: str = Form(...)):
+    summarized_sentence, original_text = get_summarized_text(input_text)
+    return templates.TemplateResponse("index.html", context={"request": request, "summary": summarized_sentence, "original_text": original_text})
+
 
 
